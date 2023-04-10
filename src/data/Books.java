@@ -6,7 +6,7 @@ package data;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+
 
 /**
  *
@@ -138,7 +138,7 @@ public class Books {
                 borrowDate = LocalDate.now();
                 returnDate = null;
 
-                System.out.println("Book successfully borrowed by " + borrower.getName());
+                System.out.println("Book successfully borrowed by " + borrower.getMemberID());
 
             } else {
                 System.out.println("This member has already borrowed the maximum number of books.");

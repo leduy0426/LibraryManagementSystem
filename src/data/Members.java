@@ -18,7 +18,7 @@ public class Members {
     private int numBorrowedBooks;
     private int maxBorrowedBooks;
 
-    public Members(String memberID, String name, String address, String phoneNumber, int numBorrowedBooks, int maxBorrowedBooks) {
+    public Members(String memberID, String name, String address, String phoneNumber) {
         this.memberID = memberID;
         this.name = name;
         this.address = address;
@@ -26,6 +26,15 @@ public class Members {
         this.numBorrowedBooks = numBorrowedBooks;
         this.maxBorrowedBooks = maxBorrowedBooks; // giới hạn số lượng sách mượn ở đây
     }
+
+    public Members(String memberID, String name, int numBorrowedBooks, int maxBorrowedBooks) {
+        this.memberID = memberID;
+        this.name = name;
+        this.numBorrowedBooks = numBorrowedBooks;
+        this.maxBorrowedBooks = maxBorrowedBooks;
+    }
+    
+    
 
     public String getMemberID() {
         return memberID;
