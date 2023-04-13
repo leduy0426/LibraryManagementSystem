@@ -17,15 +17,19 @@ public class Members {
     private String address, phoneNumber;
     private int numBorrowedBooks;
     private int maxBorrowedBooks;
+    private Books[] borrowedBooks;
 
-    public Members(String memberID, String name, String address, String phoneNumber) {
+    public Members(String memberID, String name, String address, int maxBorrowedBooks) {
         this.memberID = memberID;
         this.name = name;
         this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.numBorrowedBooks = 0;
-        this.maxBorrowedBooks = 3; // giới hạn số lượng sách mượn ở đây
+        this.maxBorrowedBooks = maxBorrowedBooks;
+        this.borrowedBooks = new Books[maxBorrowedBooks];
     }
+
+   
+
+   
 
     public Members(String memberID, String name, int numBorrowedBooks, int maxBorrowedBooks) {
         this.memberID = memberID;
@@ -84,11 +88,23 @@ public class Members {
         this.maxBorrowedBooks = maxBorrowedBooks;
     }
 
+    public Books[] getBorrowedBooks() {
+        return borrowedBooks;
+    }
+
+    public void setBorrowedBooks(Books[] borrowedBooks) {
+        this.borrowedBooks = borrowedBooks;
+    }
+
  
     public void decreasenumBorrowedBooks(){
        this.numBorrowedBooks--;
             
         }
+    
+    public void incrementNumBorrowedBooks(){
+        this.numBorrowedBooks++;
+    }
 
     @Override
     public String toString() {
@@ -97,6 +113,11 @@ public class Members {
     }
     
     public void showMembersList(){
+      System.out.printf("|%8s|%-25s|%30s|%10s|\n", 
+                                                            memberID, name, address, phoneNumber);  
+    }
+    
+    public void borrowerInfomation(){
         System.out.printf("|%8s|%-25s|%30s|%10s|%3s|%3s|\n", 
                                                             memberID, name, address, phoneNumber, numBorrowedBooks, maxBorrowedBooks);
     }

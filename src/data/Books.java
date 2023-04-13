@@ -112,6 +112,8 @@ public class Books {
         this.borrower = borrower;
     }
 
+ 
+
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -142,6 +144,8 @@ public class Books {
                 this.borrower = borrower;
                 borrowDate = LocalDate.now();
                 returnDate = null;
+                borrower.incrementNumBorrowedBooks();
+                
 
                 System.out.println("Book successfully borrowed by member " + borrower.getMemberID());
 
@@ -154,10 +158,10 @@ public class Books {
     }
 
     public void returnBook(Members borrower) {
-        if (borrower == null) {
-            System.out.println("Book has not been borrowed");
-            return;
-        }
+//        if (borrower == null) {
+//            System.out.println("Book has not been borrowed");
+//            return;
+//        } // xử lí ở trong class library 
         borrower.decreasenumBorrowedBooks();
         isAvailable = true;
         borrowDate = null;

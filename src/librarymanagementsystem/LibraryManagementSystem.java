@@ -61,6 +61,9 @@ public class LibraryManagementSystem {
                     break;
                 case 5: 
                     library.borrowABook();
+                case 6:
+                    library.returnABook();
+                    
                 default:
                     System.out.println("Please choose 1 to 8");
                     break;
@@ -77,10 +80,11 @@ public class LibraryManagementSystem {
         System.out.println("3. Show the list of books");
         System.out.println("4. Show the list of members");
         System.out.println("5. Borrow a book");
-        System.out.println("6. Show borrowed list");
-        System.out.println("7. Delete a book");
-        System.out.println("8. Delete a member");
-        System.out.println("9. Quit");
+        System.out.println("6. Return a book");
+        System.out.println("7. Show borrowed list");
+        System.out.println("8. Delete a book");
+        System.out.println("9. Delete a member");
+        System.out.println("10. Quit");
     }
     
     //ĐÃ CHUYỂN PHƯƠNG THỨC NÀY VÀO LIBRARY

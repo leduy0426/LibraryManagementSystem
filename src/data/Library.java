@@ -66,7 +66,6 @@ public class Library {
         this.borrower = borrower;
     }
 
-
     //TẠO ĐC PT THÊM SÁCH VÀO LIBRARY NHƯNG CHƯA HIỂU CÁCH TẠO THƯ VIỆN RỖNG
 //    public Library() {
 //        booksList = new ArrayList<>();
@@ -94,13 +93,13 @@ public class Library {
         ISBN = sc.nextLine();
         while (true) {
             try {
-                System.out.println("In put publication date: ");
+                System.out.print("In put publication date: ");
                 String inputDate = sc.nextLine();
                 LocalDate pubicationDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 System.out.println("Publication date: " + pubicationDate);
 
                 isAvailable = true;
-                System.out.println("Available: ");
+                System.out.print("Available: ");
                 isAvailable = sc.nextBoolean();
                 sc.nextLine();
                 break;
@@ -118,9 +117,8 @@ public class Library {
         String address, phoneNumber;
 //        int numBorrowedBooks;
 //        int maxBorrowedBooks;
-       
 
-        System.out.println("Input infomation of member #" + (countMember+1) + "/" + mb.length);
+        System.out.println("Input infomation of member #" + (countMember + 1) + "/" + mb.length);
 
         System.out.print("Input member ID : ");
         memberID = sc.nextLine();
@@ -145,60 +143,107 @@ public class Library {
 //            System.out.println("Wrong input: ");
 //        }
         //Members borrower = new Members(memberID, name, address, phoneNumber);
-        mb[countMember] = new Members(memberID, name, address, phoneNumber);
+        mb[countMember] = new Members(memberID, name, address, countBook);
         mb[countMember].setNumBorrowedBooks(0);
         mb[countMember].setMaxBorrowedBooks(3);
-       
+
         countMember++;
-        
+
         System.out.println("Member added successfully!");
     }
-    
-    public void borrowABook(){
+
+    public void borrowABook() {
         System.out.println("Which book would you like to borrow? ");
         System.out.println("In put the ID of the book that you want to borrow");
         String id = sc.nextLine();
-        
+
         //Tìm sách theo ID
         Books book = null;
         for (int i = 0; i < countBook; i++) {
-            if(ds[i].getID().equalsIgnoreCase(id)){
+            if (ds[i].getID().equalsIgnoreCase(id)) {
                 book = ds[i];
-                
+
                 break;
             }
         }
         //Thấy sách -> yêu cầu thành viên mượn sách
-        if (book != null){
+        if (book != null) {
             System.out.println("Is this the book you want to borrow?");
             book.bookInfomation();
             System.out.println("Enter member ID");
             String memberID = sc.nextLine();
-        
+
             //Tìm kiếm thành viên theo ID
             Members borrower = null;
             for (int i = 0; i < countMember; i++) {
-                if (mb[i].getMemberID().equalsIgnoreCase(memberID)){
+                if (mb[i].getMemberID().equalsIgnoreCase(memberID)) {
+                    borrower = mb[i];
+                    break;
+                }
+            }
+            // Nếu tìm thấy thành viên, mượn sách
+            if (borrower != null) {
+
+                book.borrowBook(borrower);
+                System.out.println("Book borrowed successfully!");
+                //borrower.setNumBorrowedBooks(countBook);
+            } else {
+                System.out.println("Cannot find the member with ID" + memberID);
+            }
+        } else {
+            System.out.println("Cannot find the book with ID" + id);
+        }
+    }
+
+    public void returnABook() {
+        System.out.println("Do you want to return the book");
+        System.out.println("Enter your memberID");
+        String memberID = sc.nextLine();
+
+        //Tìm người trả sách
+        Members borrower = null;
+        for (int i = 0; i < countMember; i++) {
+            if (mb[i].getMemberID().equalsIgnoreCase(memberID)) {
                 borrower = mb[i];
                 break;
             }
         }
-        // Nếu tìm thấy thành viên, mượn sách
-        if (borrower != null){
-            
-            book.borrowBook(borrower);
-            System.out.println("Book borrowed successfully!");
-        }else{
-            System.out.println("Cannot find the member with ID");
-        }    
-    }else{
-            System.out.println("Cannot find the book with ID" + id);
-        }   
+        //Thấy người trả, yêu cầu ID sách
+        if (borrower != null) {
+            System.out.println("Borrower Infomation");
+            borrower.borrowerInfomation();
+            System.out.println("Enter book ID");
+            String ID = sc.nextLine();
+
+            //Đã thấy thành viên, tìm ID sách
+            Books book = null;
+            for (int i = 0; i < countBook; i++) {
+                if (ds[i].getID().equalsIgnoreCase(ID)) {
+                    book = ds[i];
+
+                    break;
+                }
+            }
+            //thấy sách, trả sách
+            if (book != null) {
+                boolean isBorrowed = false;
+                for (int i = 0; i < borrower.getNumBorrowedBooks(); i++) {
+                    if (borrower.getBorrowedBooks()[i] == book) {
+                        isBorrowed = true;
+                        break;
+                    }
+                }
+                if(isBorrowed){
+                book.returnBook(borrower);
+                System.out.println("Book returned sucessfully!");
+            } else {
+                System.out.println("Cannot find the book with this ID" + ID);
+            }
+        } else {
+            System.out.println("Cannot find the member with ID" + memberID);
         }
-        
-        
-        
-    
+    }
+    }
 
     public void showTheListOfBooks() {
         System.out.println("The list of books in the library");
@@ -213,10 +258,10 @@ public class Library {
             mb[i].showMembersList();
         }
     }
-    
-    public void showBorrowedList(){
+
+    public void showBorrowedList() {
         System.out.println("The borrowed list from library");
-        
+
     }
 
 //    public void showBorrowedBooks(){
