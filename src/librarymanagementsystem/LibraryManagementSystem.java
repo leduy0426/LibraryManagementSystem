@@ -7,6 +7,7 @@ package librarymanagementsystem;
 import data.Books;
 import data.Library;
 import data.Members;
+import data.Tools;
 import java.awt.print.Book;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -44,7 +45,7 @@ public class LibraryManagementSystem {
         do {
             printMenu();
             System.out.print("Input your choice (1...8):");
-            choice = Integer.parseInt(sc.nextLine());
+            choice = Tools.getAnInteger();
             
             switch (choice) {
                 case 1:
@@ -61,14 +62,25 @@ public class LibraryManagementSystem {
                     break;
                 case 5: 
                     library.borrowABook();
+                    break;
                 case 6:
                     library.returnABook();
-                    
+                    break;
+                case 7:
+                    library.showBorrowedList();
+                    break;
+                case 8:
+                    library.deleteABook();
+                    break;
+                case 9:
+                    library.deleteAMember();
+                case 10:
+                    System.out.println("Good bye! See you again!");
                 default:
-                    System.out.println("Please choose 1 to 8");
+                    System.out.println("Please choose 1 to 10");
                     break;
             }
-        } while(choice != 8 );
+        } while(choice != 10 );
         
     } 
     

@@ -23,7 +23,7 @@ public class Members {
         this.memberID = memberID;
         this.name = name;
         this.address = address;
-        this.maxBorrowedBooks = maxBorrowedBooks;
+        this.maxBorrowedBooks = 5;
         this.borrowedBooks = new Books[maxBorrowedBooks];
     }
 

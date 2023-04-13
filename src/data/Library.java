@@ -93,7 +93,7 @@ public class Library {
         ISBN = sc.nextLine();
         while (true) {
             try {
-                System.out.print("In put publication date: ");
+                System.out.print("Input publication date: ");
                 String inputDate = sc.nextLine();
                 LocalDate pubicationDate = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 System.out.println("Publication date: " + pubicationDate);
@@ -154,7 +154,7 @@ public class Library {
 
     public void borrowABook() {
         System.out.println("Which book would you like to borrow? ");
-        System.out.println("In put the ID of the book that you want to borrow");
+        System.out.println("Input the ID of the book that you want to borrow");
         String id = sc.nextLine();
 
         //Tìm sách theo ID
@@ -237,7 +237,7 @@ public class Library {
                 book.returnBook(borrower);
                 System.out.println("Book returned sucessfully!");
             } else {
-                System.out.println("Cannot find the book with this ID" + ID);
+                System.out.println("Cannot find the book or you are not borrow this book with ID: " + ID);
             }
         } else {
             System.out.println("Cannot find the member with ID" + memberID);
@@ -260,9 +260,73 @@ public class Library {
     }
 
     public void showBorrowedList() {
-        System.out.println("The borrowed list from library");
-
+        System.out.println("Enter memberID");
+        String memberID = sc.nextLine();
+        
+        //Tìm thành viên
+        Members borrower = null;
+        for (int i = 0; i < countMember; i++) {
+            if (mb[i].getMemberID().equalsIgnoreCase(memberID)){
+                borrower = mb[i];
+                break;
+            }
+        }
+        if (borrower != null){
+            // Lấy danh sách các sách mà thành viên đã mượn
+            Books[] borrowedBooks = borrower.getBorrowedBooks();
+            
+            // Hiển thị thông tin các sách đã mượn
+            System.out.println("Borrowed books: ");
+            for (int i = 0; i < borrowedBooks.length; i++) {
+                Books book = borrowedBooks[i];
+                System.out.println("Book ID: " + book.getID());
+                System.out.println("Bool Title: " + book.getTitle());
+                System.out.println("Borrow Date: " + book.getBorrowDate());
+                System.out.println("Return Date: " + book.getReturnDate());
+                
+            }
+        }else{
+            System.out.println("Cannot find the member with ID: " + memberID);
+        }
     }
+    
+    public void deleteABook(){
+        System.out.println("Which book would you like to delete? ");
+        System.out.println("Input the ID of the book that you want to delete");
+        String id = sc.nextLine();
+
+        //Tìm sách theo ID
+        Books book = null;
+        int index = -1;
+        for (int i = 0; i < countBook; i++) {
+            if (ds[i].getID().equalsIgnoreCase(id)) {
+                book = ds[i];
+                index = i;    
+                break;
+            }
+        }
+        //Thấy sách -> xóa sách
+        if (book != null) {
+            System.out.println("Is this the book you want to delete?");
+            book.bookInfomation();
+            System.out.println("Enter 'Y' to confirm deletion, or any other key to cancel.");
+            String confirm = sc.nextLine();
+            
+            if (confirm.equalsIgnoreCase("Y")){
+                for (int i = index; i < countBook - 1; i++) {
+                    ds[i] = ds[i+1];
+                }
+                ds[countBook - 1] = null;
+                countBook--;
+                System.out.println("Book deleted sucessfully!");
+            
+            } else{
+                System.out.println("Deletion cancelled");
+            }
+        
+    }else{
+            System.out.println("Cannot find the book with this ID: " + id);
+        }
 
 //    public void showBorrowedBooks(){
 //        for (Books book : books){
@@ -271,4 +335,52 @@ public class Library {
 //            }
 //        }
 //    }
+}
+    
+    public void deleteAMember(){
+        System.out.println("Do you want to delete a member infomation? ");
+        System.out.println("Input the ID of member that you want to delete");
+        String memberID = sc.nextLine();
+
+        //Tìm sách theo ID
+        Members member = null;
+        int index = -1;
+        for (int i = 0; i < countMember; i++) {
+            if (mb[i].getMemberID().equalsIgnoreCase(memberID)) {
+                member = mb[i];
+                index = i;    
+                break;
+            }
+        }
+        //Thấy sách -> xóa sách
+        if (member != null) {
+            System.out.println("Is this the information of member you want to delete?");
+            member.borrowerInfomation();
+            System.out.println("Enter 'Y' to confirm deletion, or any other key to cancel.");
+            String confirm = sc.nextLine();
+            
+            if (confirm.equalsIgnoreCase("Y")){
+                for (int i = index; i < countMember - 1; i++) {
+                    mb[i] = mb[i+1];
+                }
+                mb[countMember - 1] = null;
+                countMember--;
+                System.out.println("Member information deleted sucessfully!");
+            
+            } else{
+                System.out.println("Deletion cancelled");
+            }
+        
+    }else{
+            System.out.println("Cannot find the information of member with this ID: " + memberID);
+        }
+
+//    public void showBorrowedBooks(){
+//        for (Books book : books){
+//            if(!book.isIsAvailable()){
+//                
+//            }
+//        }
+//    }
+}
 }

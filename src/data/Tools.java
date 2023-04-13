@@ -4,10 +4,27 @@
  */
 package data;
 
+import java.util.Scanner;
+
 /**
  *
  * @author fpt
  */
 public class Tools {
     
+    private static Scanner sc = new Scanner(System.in);
+    
+    public static int getAnInteger(){
+        int n;
+        do{
+            try {
+          
+        n = Integer.parseInt(sc.nextLine());
+        return n;   
+            } catch (Exception e) {
+                System.out.println("Do you know how to input an integer?");
+            }
+        }while(true);
+    }
 }
+
