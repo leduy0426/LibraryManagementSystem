@@ -23,8 +23,8 @@ public class Members {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.numBorrowedBooks = numBorrowedBooks;
-        this.maxBorrowedBooks = maxBorrowedBooks; // giới hạn số lượng sách mượn ở đây
+        this.numBorrowedBooks = 0;
+        this.maxBorrowedBooks = 3; // giới hạn số lượng sách mượn ở đây
     }
 
     public Members(String memberID, String name, int numBorrowedBooks, int maxBorrowedBooks) {

@@ -129,6 +129,11 @@ public class Books {
         this.borrower = borrower;
     }
     
+    public void bookInfomation(){
+        System.out.printf("|%8s|%30s|%-25s|%8s|\n",
+                                                     ID, title, author, ISBN);
+    }
+    
 
     public void borrowBook(Members borrower) {
         if (isAvailable == true) {
@@ -138,7 +143,7 @@ public class Books {
                 borrowDate = LocalDate.now();
                 returnDate = null;
 
-                System.out.println("Book successfully borrowed by " + borrower.getMemberID());
+                System.out.println("Book successfully borrowed by member " + borrower.getMemberID());
 
             } else {
                 System.out.println("This member has already borrowed the maximum number of books.");
@@ -148,12 +153,12 @@ public class Books {
         }
     }
 
-    public void returnBook(Members a) {
-        if (a == null) {
+    public void returnBook(Members borrower) {
+        if (borrower == null) {
             System.out.println("Book has not been borrowed");
             return;
         }
-        a.decreasenumBorrowedBooks();
+        borrower.decreasenumBorrowedBooks();
         isAvailable = true;
         borrowDate = null;
         returnDate = LocalDate.now();

@@ -60,7 +60,7 @@ public class LibraryManagementSystem {
                     library.showTheListOfMembers();
                     break;
                 case 5: 
-                    
+                    library.borrowABook();
                 default:
                     System.out.println("Please choose 1 to 8");
                     break;
@@ -76,10 +76,11 @@ public class LibraryManagementSystem {
         System.out.println("2. Add a member");
         System.out.println("3. Show the list of books");
         System.out.println("4. Show the list of members");
-        System.out.println("5. Show borrowed list");
-        System.out.println("6. Delete a book");
-        System.out.println("7. Delete a member");
-        System.out.println("8. Quit");
+        System.out.println("5. Borrow a book");
+        System.out.println("6. Show borrowed list");
+        System.out.println("7. Delete a book");
+        System.out.println("8. Delete a member");
+        System.out.println("9. Quit");
     }
     
     //ĐÃ CHUYỂN PHƯƠNG THỨC NÀY VÀO LIBRARY

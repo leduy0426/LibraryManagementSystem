@@ -18,10 +18,11 @@ public class Library {
     private String name;
     private String address;
     private Books book;
-    private Members member;
+    private Members borrower;
 
     private Scanner sc = new Scanner(System.in);
-    private int count = 0;
+    private int countBook = 0;
+    private int countMember = 0;
 
     private Books ds[] = new Books[1000];
     private Members mb[] = new Members[200];
@@ -57,13 +58,14 @@ public class Library {
         this.book = book;
     }
 
-    public Members getMember() {
-        return member;
+    public Members getBorrower() {
+        return borrower;
     }
 
-    public void setMember(Members member) {
-        this.member = member;
+    public void setBorrower(Members borrower) {
+        this.borrower = borrower;
     }
+
 
     //TẠO ĐC PT THÊM SÁCH VÀO LIBRARY NHƯNG CHƯA HIỂU CÁCH TẠO THƯ VIỆN RỖNG
 //    public Library() {
@@ -81,7 +83,7 @@ public class Library {
         String title, author;
         boolean isAvailable;
 
-        System.out.println("Input infomation from book #" + (count + 1) + "/" + ds.length);
+        System.out.println("Input infomation from book #" + (countBook + 1) + "/" + ds.length);
         System.out.print("Input ID : ");
         ID = sc.nextLine();
         System.out.print("Input title: ");
@@ -106,30 +108,30 @@ public class Library {
                 System.out.println("Wrong input: ");
             }
         }
-        ds[count] = new Books(ID, ISBN, title, author, LocalDate.MIN, isAvailable);
-        count++;
+        ds[countBook] = new Books(ID, ISBN, title, author, LocalDate.MIN, isAvailable);
+        countBook++;
         System.out.println("Book added successfully!");
     }
 
     public void addANewMember() {
         String memberID, name;
         String address, phoneNumber;
-        int numBorrowedBooks;
-        int maxBorrowedBooks;
+//        int numBorrowedBooks;
+//        int maxBorrowedBooks;
        
 
-        System.out.println("Add a new member ");
+        System.out.println("Input infomation of member #" + (countMember+1) + "/" + mb.length);
 
-        System.out.println("Input member ID : ");
+        System.out.print("Input member ID : ");
         memberID = sc.nextLine();
 
-        System.out.println("Input name: ");
+        System.out.print("Input name: ");
         name = sc.nextLine();
 
-        System.out.println("Address: ");
+        System.out.print("Address: ");
         address = sc.nextLine();
 
-        System.out.println("Phone number: ");
+        System.out.print("Phone number: ");
         phoneNumber = sc.nextLine();
 
         //đoạn này mượn sách chứ liên quan gì đến add member?
@@ -142,22 +144,72 @@ public class Library {
 //        } catch (Exception e) {
 //            System.out.println("Wrong input: ");
 //        }
-
-        mb[count] = new Members(memberID, name, address, phoneNumber);
-        count++;
+        //Members borrower = new Members(memberID, name, address, phoneNumber);
+        mb[countMember] = new Members(memberID, name, address, phoneNumber);
+        mb[countMember].setNumBorrowedBooks(0);
+        mb[countMember].setMaxBorrowedBooks(3);
+       
+        countMember++;
+        
         System.out.println("Member added successfully!");
     }
+    
+    public void borrowABook(){
+        System.out.println("Which book would you like to borrow? ");
+        System.out.println("In put the ID of the book that you want to borrow");
+        String id = sc.nextLine();
+        
+        //Tìm sách theo ID
+        Books book = null;
+        for (int i = 0; i < countBook; i++) {
+            if(ds[i].getID().equalsIgnoreCase(id)){
+                book = ds[i];
+                
+                break;
+            }
+        }
+        //Thấy sách -> yêu cầu thành viên mượn sách
+        if (book != null){
+            System.out.println("Is this the book you want to borrow?");
+            book.bookInfomation();
+            System.out.println("Enter member ID");
+            String memberID = sc.nextLine();
+        
+            //Tìm kiếm thành viên theo ID
+            Members borrower = null;
+            for (int i = 0; i < countMember; i++) {
+                if (mb[i].getMemberID().equalsIgnoreCase(memberID)){
+                borrower = mb[i];
+                break;
+            }
+        }
+        // Nếu tìm thấy thành viên, mượn sách
+        if (borrower != null){
+            
+            book.borrowBook(borrower);
+            System.out.println("Book borrowed successfully!");
+        }else{
+            System.out.println("Cannot find the member with ID");
+        }    
+    }else{
+            System.out.println("Cannot find the book with ID" + id);
+        }   
+        }
+        
+        
+        
+    
 
     public void showTheListOfBooks() {
         System.out.println("The list of books in the library");
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < countBook; i++) {
             ds[i].showBooksList();
         }
     }
 
     public void showTheListOfMembers() {
         System.out.println("The list of members in the library");
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < countMember; i++) {
             mb[i].showMembersList();
         }
     }
